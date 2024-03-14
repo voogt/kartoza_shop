@@ -1,0 +1,47 @@
+<!-- post login tools -->
+{% if not only_static %}
+	{% set currency_list = frappe.db.get_all("E Commerce Currency", fields='*') %}
+
+	<li class="nav-item">
+		<div class="dropdown">
+			<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			  Choose Currency
+			</button>
+			<div class="dropdown-menu"  aria-labelledby="dropdownMenuButton">
+				<form id="currencyChange">
+					{% for currency in currency_list %}
+					<div class="form-group" style="display: flex;">
+						<input type="radio" name="currency" value="{{currency.price_list}}" class="dropdown-item" >
+						<label style="margin-left: 2px;">{{currency.currency}}</label>
+					</div>
+					{% endfor %}
+				</form>
+			</div>
+		</div>
+		
+	</li>
+	
+	{% if frappe.session.user != 'Guest' %}
+	<li class="nav-item dropdown logged-in" id="website-post-login" data-label="website-post-login" style="display: none">
+		<a href="#" class="nav-link nav-avatar" data-toggle="dropdown">
+			<span class="user-image-wrapper"></span>
+		</a>
+		<ul class="dropdown-menu dropdown-menu-right" role="menu">
+			{%- for child in post_login -%}
+			{%- if child.url -%}
+			<a class="dropdown-item" href="{{ child.url | abs_url }}"  {% if child.open_in_new_tab %} target="_blank" {% endif %} rel="nofollow">
+				{{ child.label }}
+			</a>
+			{%- endif -%}
+			{%- endfor -%}
+			<a class="dropdown-item switch-to-desk hidden" href="/app">{{ _('Switch To Desk') }}</a>
+		</ul>
+	</li>
+	{% endif %}
+
+	{% if not hide_login %}
+	<li class="nav-item">
+		<a class="nav-link btn-login-area" href="/login">{{ _("Login") }}</a>
+	</li>
+	{% endif %}
+{% endif %}

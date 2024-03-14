@@ -1,3 +1,6 @@
+
+from datetime import datetime
+
 app_name = "kartoza_shop"
 app_title = "Kartoza Shop"
 app_publisher = "Kartoza"
@@ -13,8 +16,8 @@ app_license = "MIT"
 # app_include_js = "/assets/kartoza_shop/js/kartoza_shop.js"
 
 # include js, css files in header of web template
-# web_include_css = "/assets/kartoza_shop/css/kartoza_shop.css"
-# web_include_js = "/assets/kartoza_shop/js/kartoza_shop.js"
+web_include_css = f"/assets/kartoza_shop/css/main.css?v={datetime.now()}"
+web_include_js = f"/assets/kartoza_shop/js/currency_session.js?v={datetime.now()}"
 
 # include custom scss in every website theme (without file extension ".scss")
 # website_theme_scss = "kartoza_shop/public/scss/website"
@@ -53,10 +56,10 @@ app_license = "MIT"
 # ----------
 
 # add methods and filters to jinja environment
-# jinja = {
-# 	"methods": "kartoza_shop.utils.jinja_methods",
-# 	"filters": "kartoza_shop.utils.jinja_filters"
-# }
+jinja = {
+	# "get_shopping_cart_settings": "kartoza_shop.overrides.MultiCurrency.get_shopping_cart_settings",
+	# "filters": "kartoza_shop.utils.jinja_filters"
+}
 
 # Installation
 # ------------
@@ -108,9 +111,10 @@ app_license = "MIT"
 # ---------------
 # Override standard doctype classes
 
-# override_doctype_class = {
-# 	"ToDo": "custom_app.overrides.CustomToDo"
-# }
+override_doctype_class = {
+	# "ToDo": "custom_app.overrides.CustomToDo"
+    "E Commerce Settings": "kartoza_shop.overrides.MultiCurrency"
+}
 
 # Document Events
 # ---------------
@@ -154,7 +158,8 @@ app_license = "MIT"
 # ------------------------------
 #
 # override_whitelisted_methods = {
-# 	"frappe.desk.doctype.event.event.get_events": "kartoza_shop.event.get_events"
+# 	# "frappe.desk.doctype.event.event.get_events": "kartoza_shop.event.get_events"
+#     "erpnext.e_commerce.doctype.e_commerce_settings.get_shopping_cart_settings": "kartoza_shop.kartoza_shop.doctype"
 # }
 #
 # each overriding function accepts a `data` argument;
