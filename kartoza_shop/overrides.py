@@ -16,10 +16,13 @@ class MultiCurrency(Document):
 def get_shopping_cart_settings_f():
     
 	settings = frappe.get_cached_doc('E Commerce Settings')
+
+	if frappe.cache().get_value('currency') == None:
+		frappe.cache().set_value("currency", settings.price_list)
+
 	price_list = frappe.cache().get_value('currency')
 
-	if price_list:
-		settings.price_list = price_list
+	settings.price_list = price_list
 	
 	return settings
 
@@ -39,10 +42,12 @@ def get_cart_quotation_f(doc=None):
 	
 	cart_settings = frappe.get_cached_doc("E Commerce Settings")
 
+	if frappe.cache().get_value('currency') == None:
+		frappe.cache().set_value("currency", cart_settings.price_list)
+
 	price_list = frappe.cache().get_value('currency')
 
-	if price_list:
-		cart_settings.price_list = price_list
+	cart_settings.price_list = price_list
 
 	return {
 		"doc": _cart_settings.decorate_quotation_doc(doc),
@@ -60,10 +65,12 @@ def apply_cart_settings_f(party=None, quotation=None):
 
 	cart_settings = frappe.get_doc("E Commerce Settings")
 
+	if frappe.cache().get_value('currency') == None:
+		frappe.cache().set_value("currency", cart_settings.price_list)
+
 	price_list = frappe.cache().get_value('currency')
 
-	if price_list:
-		cart_settings.price_list = price_list
+	cart_settings.price_list = price_list
 
 	_cart_settings.set_price_list_and_rate(quotation, cart_settings)
 

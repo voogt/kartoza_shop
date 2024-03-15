@@ -5,3 +5,7 @@
 #currencyChange{
     margin-top: 10px;
 }
+
+#currency-dropdown{
+    float: right;
+}
