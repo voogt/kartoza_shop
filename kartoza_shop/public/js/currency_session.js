@@ -6,7 +6,11 @@ $(document).ready(function(){
         callback: function(r) {
             // code snippet
             var currency = r.message
-            document.getElementById("dropdownMenuButton").innerText = currency
+            try {
+                document.getElementById("dropdownMenuButton").innerText = currency
+            } catch (error) {
+                
+            }
         }
     });
 
